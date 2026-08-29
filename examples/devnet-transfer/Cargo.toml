@@ -1,0 +1,8 @@
+[package]
+name = "rialo-devnet-transfer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rialo-cdk = "0.18.1"
+tokio = { version = "1.49", features = ["macros", "rt-multi-thread"] }
