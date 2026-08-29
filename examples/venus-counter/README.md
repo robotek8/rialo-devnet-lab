@@ -1,12 +1,20 @@
-﻿# Rialo Venus Counter
+﻿# Venus Counter
 
-A minimal stateful Venus workflow built, deployed and invoked on Rialo DevNet.
+My first experiment with a stateful Rialo Venus workflow.
 
-## What it does
+This took more trial and error than the previous examples.
 
-The workflow stores a `counter` value.
+I am still learning how Venus works, so this is intentionally a very small program.
 
-Its initiating function accepts an amount and adds that value to the counter.
+## Idea
+
+The workflow contains one value:
+
+```text
+counter
+```
+
+and one initiating function that adds a number to it.
 
 ```rust
 initiating fn start(&mut self, amount: u64) -> ProgramResult {
@@ -15,77 +23,65 @@ initiating fn start(&mut self, amount: u64) -> ProgramResult {
 }
 ```
 
-## Venus Workflow
+## What happened while building it
 
-The project uses the Rialo Venus DSL:
+The first versions didn't compile.
+
+The installed Rialo 0.18.1 crates turned out to be more useful than guessing from examples, so I looked through the local Venus DSL sources to understand the expected structure.
+
+One important detail was that the DSL expected:
 
 ```rust
 rialo! {
     workflow {
-        state {
-            counter: u64,
-        }
-
-        program {
-            use rialo_s_program::{
-                entrypoint::ProgramResult,
-                msg,
-            };
-
-            initiating fn start(&mut self, amount: u64) -> ProgramResult {
-                self.counter += amount;
-                Ok(())
-            }
-        }
+        ...
     }
 }
 ```
 
-During compilation Venus generates:
+rather than putting `state` directly under `rialo!`.
 
-```text
-wit/rialo-venus-counter.wit
-wit/rialo-venus-counter-manifest.json
-```
+There were also a few dependency and macro issues that only appeared when building the implementation / PolkaVM artifact.
+
+Eventually the full flow worked.
 
 ## Build
 
-Check the workflow:
+Check the implementation:
 
 ```bash
 cargo check --features implementation
 ```
 
-Build the PolkaVM deployment artifact:
+Build the deployment artifact:
 
 ```bash
 cargo build --manifest-path artifact/Cargo.toml
 ```
 
-The resulting PolkaVM binary is generated under:
+Venus generates the WIT interface and manifest under:
+
+```text
+wit/
+```
+
+The PolkaVM build output is generated under:
 
 ```text
 target/rialo-build/
 ```
 
-## Deploy to DevNet
+## Deploy
 
 ```bash
 rialo client program deploy-venus .
 ```
 
-Successful DevNet deployment:
-
-```text
-Program ID:
-2fLrxQyQABAzhPoKn2iTRrYSSsovrT7hC6uBonbD5o35
-```
+The program successfully deployed to Rialo DevNet.
 
 ## Invoke
 
-The workflow requires a nonce for `workflow_pda_slug`.
-
-The Rialo CLI can generate one automatically using `random`.
+I invoked the `start` function with:
 
 ```bash
 rialo client program invoke \
@@ -93,29 +89,27 @@ rialo client program invoke \
   --function start \
   --arg workflow_pda_slug=random \
   --arg amount=5 \
-  2fLrxQyQABAzhPoKn2iTRrYSSsovrT7hC6uBonbD5o35
+  <PROGRAM_ID>
 ```
 
-Successful invocation produced an on-chain transaction:
+That produced a confirmed DevNet transaction.
+
+## What I learned
+
+This experiment helped me understand the rough path from source code to something actually running on Rialo:
 
 ```text
-52qGRvvye6ubzaqNDgPCj7SZH6SC4aiesWiiMsav3TDYe5mbEGLB1fpLqh7guQtBCPXH1ksa4rw8ZQJrWkshyrZe
+Rust / Venus DSL
+      ↓
+WIT + manifest
+      ↓
+PolkaVM
+      ↓
+DevNet deployment
+      ↓
+on-chain invocation
 ```
 
-## Stack
+I definitely don't understand every part of Venus yet.
 
-- Rust
-- Rialo Venus 0.18.1
-- Rialo CLI 0.18.1
-- Rialo S Program 0.18.1
-- PolkaVM
-- Rialo DevNet
-
-## Status
-
-- Workflow compiled
-- WIT generated
-- Venus manifest generated
-- PolkaVM artifact built
-- Program deployed to DevNet
-- `start` successfully invoked on-chain
+That's the reason this repo exists.

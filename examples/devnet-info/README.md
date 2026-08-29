@@ -1,12 +1,8 @@
-﻿# Rialo DevNet Info
+﻿# DevNet Info
 
-A minimal Rust example that connects to Rialo DevNet using the Rialo CDK.
+This was my first attempt at talking to Rialo DevNet from Rust.
 
-## What it does
-
-- Connects to Rialo DevNet
-- Queries the current block height
-- Prints the result to the terminal
+Nothing complicated here: the program connects through Rialo CDK and asks the network for its current block height.
 
 ## Run
 
@@ -14,7 +10,7 @@ A minimal Rust example that connects to Rialo DevNet using the Rialo CDK.
 cargo run
 ```
 
-Example output:
+Example:
 
 ```text
 Connecting to Rialo DevNet...
@@ -22,11 +18,10 @@ Connected successfully.
 Rialo DevNet block height: 4870796
 ```
 
-The block height will naturally change as the network progresses.
+Obviously the block height will be different each time.
 
-## Stack
+## Why I made this
 
-- Rust
-- Rialo CDK 0.18.1
-- Tokio
-- Rialo DevNet
+Before trying transactions or Venus programs I wanted the smallest possible test that proved my Rust code could actually communicate with Rialo DevNet.
+
+It worked, so I moved on to the next experiment.

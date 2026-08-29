@@ -1,16 +1,15 @@
-﻿# Rialo DevNet Transfer
+﻿# DevNet Transfer
 
-A Rust example that creates a temporary wallet and sends a real transaction on Rialo DevNet using the Rialo CDK.
+My next Rialo CDK experiment after reading the DevNet block height.
 
-## What it does
+This program:
 
-- Creates an in-memory DevNet wallet
-- Requests test RLO from the Rialo faucet
-- Checks the wallet balance
-- Sends 0.001 RLO to a specified recipient
-- Waits for transaction confirmation
-- Prints the resulting transaction signature
-- Checks the remaining wallet balance
+- creates a temporary in-memory wallet
+- requests test RLO from the DevNet faucet
+- checks its balance
+- sends 0.001 RLO
+- waits for confirmation
+- prints the transaction signature
 
 ## Run
 
@@ -26,21 +25,13 @@ Requesting 0.01 RLO from DevNet faucet...
 Temporary wallet balance: 0.01 RLO
 Sending 0.001 RLO...
 Transfer confirmed!
-Transaction: <TRANSACTION_SIGNATURE>
 Remaining temporary balance: 0.008995 RLO
 ```
 
-## Notes
+## What I learned
 
-The wallet used by this example exists only in memory.
+This was the first time in this repo that my own Rust program created and submitted a transaction instead of only reading network data.
 
-The example is intended for Rialo DevNet and uses faucet funds only.
+The wallet is temporary and exists only in memory.
 
-No private keys are committed to this repository.
-
-## Stack
-
-- Rust
-- Rialo CDK 0.18.1
-- Tokio
-- Rialo DevNet
+This is DevNet code and uses faucet funds only.

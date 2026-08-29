@@ -1,95 +1,73 @@
-﻿# Rialo DevNet Setup
+﻿# Rialo DevNet Notes
 
-Notes from my first hands-on sessions with Rialo DevNet.
+These are notes from my first attempts at using Rialo.
 
-## Environment
+I started with basically no experience with the Rialo developer stack and very little Rust knowledge.
+
+AI assistance helped me work through commands, compiler errors and unfamiliar Rust/Rialo concepts, but I kept the actual experiments small enough that I could follow what was happening.
+
+## Setup
+
+I ended up using:
 
 - Windows 11
 - WSL2
 - Ubuntu
-- Rust
-- Cargo
-- Rialoman
-- Rialo CLI 0.18.1
+- Rust / Cargo
+- `rialoman`
+- Rialo CLI
 
-## Completed
+## First milestone: DevNet
 
-### Tooling
+I connected the CLI to DevNet, created test keypairs and requested faucet RLO.
 
-- Installed WSL2 / Ubuntu
-- Installed Rust toolchain
-- Installed `rialoman`
-- Installed Rialo CLI
-- Connected the CLI to Rialo DevNet
+That confirmed the basic environment worked.
 
-### Wallet and DevNet
+## Second milestone: RPC
 
-- Generated DevNet keypairs
-- Requested test RLO from the faucet
-- Confirmed a funded DevNet account
+I wrote a small Rust program using Rialo CDK that queried the current DevNet block height.
 
-### Rust RPC
+Nothing fancy, but it proved I could communicate with the network from my own code.
 
-Created `examples/devnet-info`.
+## Third milestone: transaction
 
-The application connects to Rialo DevNet using Rialo CDK and queries the current block height.
+The next example created a temporary wallet, requested faucet RLO and sent a small transaction.
 
-### Rust Transaction
+That was my first programmatically submitted Rialo transaction.
 
-Created `examples/devnet-transfer`.
+## Fourth milestone: Venus
 
-The application:
+The Venus workflow was where things became much more interesting.
 
-- creates an in-memory wallet
-- requests faucet RLO
-- sends 0.001 RLO
-- waits for confirmation
-- prints the transaction signature
+Several attempts failed because of DSL syntax, missing dependencies and implementation-build differences.
 
-### Venus Program
+Instead of continuing to guess, I inspected the locally installed Rialo 0.18.1 crate sources.
 
-Created `examples/venus-counter`.
+That eventually got the workflow compiling.
 
-The workflow:
-
-- stores a `counter`
-- accepts an `amount`
-- increments the counter
-- generates a WIT interface
-- generates a Venus manifest
-- compiles to PolkaVM
-- deploys to Rialo DevNet
-- executes through an on-chain invocation
-
-## Current Milestone
-
-The full development flow has been completed:
+From there I managed to:
 
 ```text
-Rust source
-    ↓
-Venus DSL
-    ↓
-WIT + manifest
-    ↓
-PolkaVM artifact
-    ↓
-Rialo DevNet deployment
-    ↓
-On-chain invocation
+generate WIT
+generate Venus manifest
+build PolkaVM artifact
+deploy to DevNet
+invoke the workflow
 ```
 
-## Next Experiments
+## Current understanding
 
-- Explore more Venus workflow features
-- Add multiple workflow functions
-- Experiment with persistent state
-- Explore REX functionality
-- Explore external data / HTTP capabilities
-- Build a more useful DevNet application
+I now understand the basic development flow much better than when I started, but I'm still very much learning the details.
 
-## Security
+Next I want to experiment with things that are actually specific to Rialo instead of only making increasingly complicated test programs.
 
-Only Rialo DevNet is used.
+Possibilities:
 
-Private keys, seed phrases and production credentials must never be committed to this repository.
+- more useful Venus state
+- multiple workflow functions
+- REX
+- external data / HTTP
+- automation
+- real-world event driven workflows
+
+The point is to understand each new piece as I add it rather than just generating a large project I don't understand.

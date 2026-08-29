@@ -1,69 +1,84 @@
 ﻿# Rialo DevNet Lab
 
-Hands-on experiments with Rialo DevNet using Rust, Rialo CDK and Venus.
+My personal learning log while exploring Rialo DevNet.
 
-This repository documents my progress from basic DevNet interaction to deploying and invoking a stateful Venus program on-chain.
+I'm not a Rust or blockchain developer. I started this repo to understand how Rialo works by actually running things instead of only reading about them.
 
-## Completed
+I use AI as a learning / pair-programming tool to help me understand errors, Rust syntax and the Rialo toolchain.
 
-- Installed and configured Rialo CLI
-- Connected to Rialo DevNet
-- Created DevNet keypairs
-- Requested test RLO from the faucet
-- Queried Rialo DevNet through Rust RPC
-- Created and signed an RLO transfer from Rust
-- Built a Venus workflow
-- Compiled a Venus program to PolkaVM
-- Deployed the program to Rialo DevNet
-- Invoked the deployed program on-chain
+Some things worked immediately. Some definitely didn't. A lot of this repo came from fixing those problems one by one.
 
-## Examples
+## What I've tried so far
 
-### DevNet Info
+- Installed Rialo CLI and connected to DevNet
+- Created DevNet wallets and used the faucet
+- Queried DevNet block height from a small Rust program
+- Sent a DevNet RLO transaction from Rust
+- Experimented with the Venus DSL
+- Generated WIT and a Venus manifest
+- Built a PolkaVM artifact
+- Deployed a small Venus counter program
+- Invoked it on DevNet
 
-`examples/devnet-info`
+## Experiments
 
-A minimal Rust application using Rialo CDK to connect to DevNet and query the current block height.
+### `examples/devnet-info`
 
-### DevNet Transfer
+My first small Rust/Rialo CDK experiment.
 
-`examples/devnet-transfer`
+It connects to DevNet and reads the current block height.
 
-Creates a temporary DevNet wallet, requests faucet RLO and sends a real DevNet transaction.
+### `examples/devnet-transfer`
 
-### Venus Counter
+A slightly more interesting experiment.
 
-`examples/venus-counter`
+It creates a temporary wallet, gets test RLO from the faucet and sends a small DevNet transaction.
 
-A stateful Venus workflow that stores a counter, compiles to PolkaVM, deploys to Rialo DevNet and can be invoked on-chain.
+### `examples/venus-counter`
 
-## Project Structure
+This one took considerably more trial and error.
+
+It's a tiny stateful Venus workflow with a counter.
+
+I used it to learn the basic flow:
 
 ```text
-rialo-devnet-lab/
-├── examples/
-│   ├── devnet-info/
-│   ├── devnet-transfer/
-│   └── venus-counter/
-├── notes/
-├── scripts/
-└── README.md
+Venus source
+   ↓
+WIT / manifest
+   ↓
+PolkaVM artifact
+   ↓
+DevNet deploy
+   ↓
+invoke
 ```
 
-## Stack
+## Notes
 
+There may be rough edges here.
+
+This repository is intentionally a record of me learning the tooling, not a production application or an example of best-practice Rust development.
+
+One useful lesson already: some examples and documentation I found didn't exactly match Rialo 0.18.1, so I ended up looking directly through the installed crate sources to understand the current Venus DSL.
+
+## Environment
+
+- Windows 11
+- WSL2 / Ubuntu
 - Rust
 - Rialo CLI 0.18.1
 - Rialo CDK 0.18.1
 - Rialo Venus 0.18.1
-- PolkaVM
-- Rialo DevNet
-- WSL2 / Ubuntu
 
-## Disclaimer
+## Security
 
-Personal learning repository for Rialo DevNet experimentation.
+DevNet only.
 
-No production keys or private key material are stored in this repository.
+No seed phrases, private keys or production credentials should ever be committed here.
 
-Not affiliated with Rialo or Subzero Labs.
+## Why this repo exists
+
+Mostly curiosity.
+
+I'm learning what Rialo can do and documenting the experiments that actually worked.
