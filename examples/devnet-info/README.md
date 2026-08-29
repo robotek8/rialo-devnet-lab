@@ -1,4 +1,4 @@
-# Rialo DevNet Info
+﻿# Rialo DevNet Info
 
 A minimal Rust example that connects to Rialo DevNet using the Rialo CDK.
 
@@ -10,18 +10,23 @@ A minimal Rust example that connects to Rialo DevNet using the Rialo CDK.
 
 ## Run
 
-Run:
-
+```bash
 cargo run
+```
 
 Example output:
 
+```text
 Connecting to Rialo DevNet...
 Connected successfully.
 Rialo DevNet block height: 4870796
+```
+
+The block height will naturally change as the network progresses.
 
 ## Stack
 
 - Rust
 - Rialo CDK 0.18.1
 - Tokio
+- Rialo DevNet
