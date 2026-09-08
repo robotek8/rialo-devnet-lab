@@ -1,4 +1,4 @@
-﻿# Rialo DevNet Lab
+# Rialo DevNet Lab
 
 My personal learning log while exploring Rialo DevNet.
 
@@ -53,6 +53,18 @@ DevNet deploy
    ↓
 invoke
 ```
+
+## Build smoke checks
+
+The Rust examples are intentionally separate crates with their own lockfiles. To catch accidental breakage while the lab grows, run all current examples with their pinned dependency sets:
+
+```bash
+bash scripts/check-all.sh
+```
+
+The script runs `cargo check --locked` for `devnet-info`, `devnet-transfer`, and `venus-counter`, reports each result separately, and exits non-zero if any example stops compiling.
+
+GitHub Actions runs the same locked build checks on pushes and pull requests. This is a compile-time smoke test only: it does not call the Rialo faucet, submit transactions, deploy Venus programs, or require DevNet credentials.
 
 ## Notes
 
