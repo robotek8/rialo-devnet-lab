@@ -1,0 +1,51 @@
+name: Rust example smoke checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cargo-check:
+    name: cargo check (${{ matrix.example }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - examples/devnet-info
+          - examples/devnet-transfer
+          - examples/venus-counter
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ matrix.example }}
+
+      - name: Check locked example
+        run: cargo check --locked --manifest-path "${{ matrix.example }}/Cargo.toml"
+
+  check-all-script:
+    name: check-all wrapper
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run repository smoke check
+        run: bash scripts/check-all.sh
