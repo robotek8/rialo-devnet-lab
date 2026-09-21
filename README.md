@@ -54,6 +54,16 @@ DevNet deploy
 invoke
 ```
 
+
+### `examples/venus-kv-store`
+
+A small state-persistence experiment after the counter.
+
+It starts with a deliberately bounded single key/value slot: `set` mutates
+workflow state, `get` observes it on a later invocation, and `clear` resets
+the slot. The first version uses primitive state so the DevNet behaviour can be
+verified before experimenting with collection-shaped state.
+
 ## Notes
 
 There may be rough edges here.
