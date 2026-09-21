@@ -21,3 +21,13 @@ That gives the experiment three useful checks:
 The first implementation is single-slot on purpose. Expanding it should happen
 only after the generated WIT/manifest and an actual DevNet invocation confirm
 the state semantics.
+
+
+## Result
+
+The experiment was built and deployed successfully on DevNet. A fixed workflow
+slug was reused across `set`, matching `get`, non-matching `get`, and
+`clear` invocations. All four transactions completed successfully.
+
+That validates the intended invocation path and gives a working baseline for a
+future multi-slot state experiment.

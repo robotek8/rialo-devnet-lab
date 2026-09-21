@@ -132,3 +132,28 @@ revision tracking
 
 If this primitive version builds and behaves correctly on DevNet, the next
 iteration can explore a bounded multi-slot store or collection-shaped state.
+
+
+## DevNet validation
+
+Validated on native Ubuntu with Rialo stable 0.18.1 and rialo-rust 0.0.3.
+
+The complete flow succeeded:
+
+```text
+cargo check --features implementation        OK
+cargo build --manifest-path artifact/Cargo.toml   OK
+deploy-venus                                 OK
+set(key=7, value=42)                         OK
+get(key=7)                                   OK
+get(key=8)                                   OK
+clear()                                      OK
+```
+
+The deployed DevNet program used for this validation was:
+
+```text
+2RFbUK9bDk7LHUMnPHbTtNN2xiP3Jc9TMux5Bydh7z5W
+```
+
+All four invocations reused the same fixed `workflow_pda_slug`, which is important because the workflow state PDA is derived from that slug.
