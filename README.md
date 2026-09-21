@@ -54,6 +54,16 @@ DevNet deploy
 invoke
 ```
 
+
+### `examples/venus-kv-store`
+
+A small state-persistence experiment after the counter.
+
+It starts with a deliberately bounded single key/value slot: `set` mutates
+workflow state, `get` observes it on a later invocation, and `clear` resets
+the slot. The first version uses primitive state so the DevNet behaviour can be
+verified before experimenting with collection-shaped state.
+
 ## Notes
 
 There may be rough edges here.
@@ -64,12 +74,17 @@ One useful lesson already: some examples and documentation I found didn't exactl
 
 ## Environment
 
-- Windows 11
-- WSL2 / Ubuntu
-- Rust
+This lab originally started on Windows 11 + WSL2 and is now continued on native Ubuntu.
+
+Current validated environment:
+
+- Ubuntu 26.04 LTS
+- Rust via rustup
+- rialoman 0.3.0
 - Rialo CLI 0.18.1
 - Rialo CDK 0.18.1
 - Rialo Venus 0.18.1
+- rialo-rust 0.0.3
 
 ## Security
 
