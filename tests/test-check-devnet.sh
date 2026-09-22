@@ -24,7 +24,7 @@ assert_contains() {
 }
 
 make_rialo
-PATH="$TMP:$PATH" "$CHECK" >"$TMP/ok"
+PATH="$TMP:$PATH" bash "$CHECK" >"$TMP/ok"
 assert_contains "$TMP/ok" "Summary: 0 failure(s), 0 warning(s)"
 
 set +e
