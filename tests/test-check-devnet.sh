@@ -28,7 +28,7 @@ PATH="$TMP:$PATH" bash "$CHECK" >"$TMP/ok"
 assert_contains "$TMP/ok" "Summary: 0 failure(s), 0 warning(s)"
 
 set +e
-PATH="$TMP:$PATH" MOCK_KEYTOOL_RC=1 "$CHECK" >"$TMP/warn"
+PATH="$TMP:$PATH" MOCK_KEYTOOL_RC=1 bash "$CHECK" >"$TMP/warn"
 rc=$?
 set -e
 [[ $rc -eq 0 ]]
@@ -36,7 +36,7 @@ assert_contains "$TMP/warn" "Stored keypairs         WARN"
 assert_contains "$TMP/warn" "Summary: 0 failure(s), 1 warning(s)"
 
 set +e
-PATH="$TMP:$PATH" MOCK_BALANCE_RC=1 "$CHECK" >"$TMP/fail"
+PATH="$TMP:$PATH" MOCK_BALANCE_RC=1 bash "$CHECK" >"$TMP/fail"
 rc=$?
 set -e
 [[ $rc -eq 1 ]]
