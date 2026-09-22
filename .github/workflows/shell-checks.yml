@@ -1,0 +1,16 @@
+name: shell checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shell syntax
+        run: bash -n scripts/check-devnet.sh tests/test-check-devnet.sh
+      - name: Healthcheck tests
+        run: bash tests/test-check-devnet.sh
